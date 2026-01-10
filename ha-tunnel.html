@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HA Tunnel – TRS Config Hub</title>
+
+<style>
+:root{
+  --bg:#0e1220;
+  --surface:#141a33;
+  --surface-soft:#1a2145;
+  --text:#eef1ff;
+  --muted:#9aa3d4;
+  --accent:#4da3ff;
+}
+
+body.light{
+  --bg:#f5f7ff;
+  --surface:#ffffff;
+  --surface-soft:#eef2ff;
+  --text:#0f1220;
+  --muted:#6b7280;
+  --accent:#2563eb;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background:var(--bg);
+  color:var(--text);
+  transition:.3s;
+}
+
+.wrapper{
+  max-width:900px;
+  margin:auto;
+  padding:24px 16px 60px;
+}
+
+a{text-decoration:none;color:inherit}
+
+/* Top bar */
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+.back{
+  background:var(--surface-soft);
+  padding:10px 16px;
+  border-radius:12px;
+  font-size:14px;
+}
+.toggle{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  background:var(--surface-soft);
+  border:none;
+  color:var(--text);
+  font-size:18px;
+}
+
+/* Header */
+.header{
+  text-align:center;
+  margin-bottom:28px;
+}
+.header img{
+  width:64px;
+  height:64px;
+  object-fit:contain;
+  margin-bottom:8px;
+  background:var(--surface-soft);
+  padding:10px;
+  border-radius:16px;
+}
+.header h1{
+  font-size:26px;
+  margin:0 0 6px;
+}
+.header p{color:var(--muted)}
+
+/* Files */
+.files{
+  background:var(--surface);
+  border-radius:18px;
+  overflow:hidden;
+}
+.file{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:14px;
+  padding:14px 18px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  align-items:center;
+}
+.file:last-child{border-bottom:none}
+
+.file-name{font-weight:600;font-size:15px}
+.file-meta{font-size:12px;color:var(--muted);margin-top:4px}
+
+.file-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:180px;
+  justify-content:flex-end;
+}
+
+/* Status */
+.status{
+  font-size:12px;
+  padding:5px 10px;
+  border-radius:999px;
+}
+.status.ok{background:rgba(0,255,150,.15);color:#00ffa0}
+.status.warn{background:rgba(255,200,0,.15);color:#ffd400}
+.status.bad{background:rgba(255,80,80,.15);color:#ff6464}
+
+/* Download */
+.download{
+  background:linear-gradient(135deg,var(--accent),#6aa8ff);
+  color:#fff;
+  padding:8px 16px;
+  border-radius:12px;
+  font-size:13px;
+  font-weight:600;
+  box-shadow:0 8px 18px rgba(77,163,255,.35);
+}
+
+/* Footer */
+footer{
+  margin-top:40px;
+  text-align:center;
+  font-size:13px;
+  color:var(--muted);
+}
+</style>
+</head>
+
+<body>
+<div class="wrapper">
+
+<div class="topbar">
+  <a href="index.html" class="back">← Back to Home</a>
+  <button class="toggle" id="modeBtn" onclick="toggleMode()">☀️</button>
+</div>
+
+<div class="header">
+  <img src="icons/ha.png">
+  <h1>HA Tunnel</h1>
+  <p>Available VPN configuration files</p>
+</div>
+
+<div class="files">
+
+  <div class="file">
+    <div>
+      <div class="file-name">ha-config-01.hat</div>
+      <div class="file-meta">1.2 MB • Uploaded: 2026-01-05</div>
+    </div>
+    <div class="file-actions">
+      <span class="status ok">Working</span>
+      <a class="download" href="configs/ha/ha-config-01.hat">Download</a>
+    </div>
+  </div>
+
+  <div class="file">
+    <div>
+      <div class="file-name">ha-config-02.hat</div>
+      <div class="file-meta">1.1 MB • Uploaded: 2026-01-02</div>
+    </div>
+    <div class="file-actions">
+      <span class="status warn">Expiring 15 Jan</span>
+      <a class="download" href="configs/ha/ha-config-02.hat">Download</a>
+    </div>
+  </div>
+
+  <div class="file">
+    <div>
+      <div class="file-name">ha-config-old.hat</div>
+      <div class="file-meta">0.9 MB • Uploaded: 2025-12-20</div>
+    </div>
+    <div class="file-actions">
+      <span class="status bad">Expired</span>
+      <span class="download" style="opacity:.35">Expired</span>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+© 2024–2026 TRS🇻🇦MANAGEMENT TEAM. All rights reserved. Unauthorized use, reproduction, or distribution of any website content, branding, or VPN configuration files is strictly prohibited.
+</footer>
+
+</div>
+
+<script>
+const btn=document.getElementById("modeBtn");
+if(localStorage.getItem("theme")==="light"){document.body.classList.add("light")}
+function updateIcon(){btn.textContent=document.body.classList.contains("light")?"🌙":"☀️"}
+function toggleMode(){
+  document.body.classList.toggle("light");
+  localStorage.setItem("theme",document.body.classList.contains("light")?"light":"dark");
+  updateIcon();
+}
+updateIcon();
+</script>
+
+</body>
+</html>
