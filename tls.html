@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>TLS Tunnel – TRS Config Hub</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root{
+  --bg:#0b0e14;
+  --surface:#151a23;
+  --surface-soft:#1b2230;
+  --text:#eef2ff;
+  --muted:#a1a7c2;
+  --accent:#3bd6c6;
+}
+body.light{
+  --bg:#e9edf5;
+  --surface:#ffffff;
+  --surface-soft:#eef2ff;
+  --text:#0f1220;
+  --muted:#6b7280;
+  --accent:#2bb5a3;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text);transition:.3s}
+.wrapper{max-width:900px;margin:auto;padding:24px 16px 60px}
+a{text-decoration:none;color:inherit}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.back{background:var(--surface-soft);padding:10px 16px;border-radius:12px;font-size:14px}
+.toggle{width:42px;height:42px;border-radius:12px;background:var(--surface-soft);border:none;font-size:18px;color:var(--text)}
+body.light .back,body.light .toggle{background:#fff;box-shadow:0 6px 20px rgba(0,0,0,.06);color:#0f1220}
+.header{text-align:center;margin-bottom:28px}
+.header img{width:64px;height:64px;padding:10px;border-radius:16px;background:var(--surface-soft)}
+body.light .header img{background:#fff;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+.files{background:linear-gradient(180deg,var(--surface-soft),var(--surface));border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+body.light .files{background:linear-gradient(180deg,#f8fbff,#fff);box-shadow:0 20px 60px rgba(0,0,0,.08)}
+.file{display:grid;grid-template-columns:1fr auto;gap:14px;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.06);align-items:center}
+.file:last-child{border-bottom:none}
+.file-name{font-weight:600;font-size:15px}
+.file-meta{font-size:12px;color:var(--muted);margin-top:4px}
+.file-actions{display:flex;align-items:center;gap:10px}
+.download{background:var(--accent);color:#002;padding:8px 16px;border-radius:12px;font-size:13px;font-weight:700;box-shadow:0 8px 20px rgba(59,214,198,.35)}
+footer{text-align:center;margin-top:40px;font-size:13px;color:var(--muted)}
+</style>
+</head>
+
+<body>
+<div class="wrapper">
+  <div class="topbar">
+    <a href="index.html" class="back">← Back to Home</a>
+    <button class="toggle" id="modeBtn">☀️</button>
+  </div>
+
+  <div class="header">
+    <img src="icons/tls.png"/>
+    <h1>TLS Tunnel</h1>
+    <p style="color:var(--muted)">Live VPN configuration files</p>
+  </div>
+
+  <div class="files" id="list">
+    <div class="file"><div><div class="file-name">Loading…</div><div class="file-meta">Fetching from Supabase</div></div></div>
+  </div>
+
+  <footer>
+    © 2024–2026 TRS🇻🇦MANAGEMENT TEAM. All rights reserved.
+  </footer>
+</div>
+
+<script>
+/* THEME SYNC */
+const btn=document.getElementById("modeBtn");
+if(localStorage.getItem("theme")==="light"){document.body.classList.add("light")}
+function updateIcon(){btn.textContent=document.body.classList.contains("light")?"🌙":"☀️"}
+btn.onclick=()=>{document.body.classList.toggle("light");localStorage.setItem("theme",document.body.classList.contains("light")?"light":"dark");updateIcon()}
+updateIcon();
+
+/* SUPABASE */
+const supabase = supabasejs.createClient(
+  "https://xqfleiapsacqdmwjeliq.supabase.co",
+  "sb_publishable_EQm7Tn_J4yEuTkUkq8I5Ag_x47N2lBy"
+);
+
+async function load(){
+  const list=document.getElementById("list");
+  const { data, error } = await supabase
+    .storage.from("vpn-configs")
+    .list("tls",{limit:100,sortBy:{column:"created_at",order:"desc"}});
+
+  if(error){list.innerHTML=`<div class="file"><div>${error.message}</div></div>`;return}
+  if(!data.length){list.innerHTML=`<div class="file"><div>No files yet</div></div>`;return}
+
+  list.innerHTML="";
+  for(const f of data){
+    const { data:url } = await supabase.storage.from("vpn-configs").createSignedUrl(`tls/${f.name}`,3600);
+    const size=(f.metadata.size/1024).toFixed(1);
+    const date=new Date(f.created_at).toLocaleDateString();
+    list.innerHTML+=`
+      <div class="file">
+        <div>
+          <div class="file-name">${f.name}</div>
+          <div class="file-meta">${size} KB • Uploaded ${date}</div>
+        </div>
+        <div class="file-actions">
+          <a class="download" href="${url.signedUrl}">Download</a>
+        </div>
+      </div>`;
+  }
+}
+load();
+</script>
+</body>
+</html>
