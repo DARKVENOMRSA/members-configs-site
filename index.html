@@ -2,346 +2,47 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TRS Config Hub</title>
-
-<style>
-:root{
-  --bg:#0e1220;
-  --surface:#141a33;
-  --surface-soft:#1a2145;
-  --text:#eef1ff;
-  --muted:#9aa3d4;
-  --accent:#4da3ff;
-  --glow:rgba(77,163,255,.25);
-}
-
-/* Light mode */
-body.light{
-  --bg:#f5f7ff;
-  --surface:#ffffff;
-  --surface-soft:#eef2ff;
-  --text:#0f1220;
-  --muted:#6b7280;
-  --accent:#2563eb;
-  --glow:rgba(37,99,235,.18);
-}
-
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
-  background:
-    radial-gradient(1200px 600px at 10% -10%, rgba(77,163,255,.12), transparent 60%),
-    radial-gradient(900px 500px at 90% 10%, rgba(77,163,255,.08), transparent 60%),
-    var(--bg);
-  color:var(--text);
-  transition:background .35s,color .35s;
-}
-
-a{text-decoration:none;color:inherit}
-.wrapper{max-width:1000px;margin:auto;padding:28px 16px 64px}
-
-/* Topbar */
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:18px;
-}
-
-/* Icon toggle */
-.toggle{
-  width:42px;
-  height:42px;
-  border-radius:12px;
-  background:linear-gradient(180deg,var(--surface-soft),var(--surface));
-  border:1px solid rgba(255,255,255,.08);
-  color:var(--text);
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:18px;
-  box-shadow:0 6px 16px rgba(0,0,0,.25);
-  transition:.25s;
-}
-.toggle:hover{transform:translateY(-1px)}
-
-/* Reveal animation */
-.reveal{
-  opacity:0;
-  transform:translateY(16px) scale(.985);
-  transition:.6s cubic-bezier(.2,.7,.2,1);
-}
-.reveal.show{opacity:1;transform:none}
-
-/* Brand */
-.brand{text-align:center;margin-bottom:22px}
-.brand img{
-  max-width:200px;
-  width:100%;
-  filter:drop-shadow(0 8px 22px rgba(0,0,0,.35));
-}
-
-/* Hero */
-.hero{text-align:center;margin-bottom:36px}
-.hero h1{font-size:32px;margin:0 0 8px}
-.hero p{color:var(--muted)}
-
-/* Info cards */
-.info{
-  background:linear-gradient(180deg,var(--surface-soft),var(--surface));
-  border-radius:18px;
-  padding:22px;
-  margin-bottom:22px;
-  box-shadow:0 12px 28px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.05);
-}
-.info h2{margin:0 0 10px;font-size:18px}
-.info p,.info li{color:var(--muted);font-size:14px;line-height:1.6}
-.info ul{padding-left:18px}
-
-/* Community */
-.community-buttons{display:flex;gap:14px;margin-top:12px}
-.community-btn{
-  flex:1;
-  padding:12px;
-  border-radius:14px;
-  text-align:center;
-  background:linear-gradient(180deg,var(--surface-soft),var(--surface));
-  border:1px solid rgba(77,163,255,.25);
-  transition:.25s;
-  box-shadow:0 10px 24px rgba(0,0,0,.25);
-}
-.community-btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 14px 34px rgba(0,0,0,.35);
-}
-
-/* VPN grid */
-.vpn-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:20px;
-  margin-top:28px;
-}
-
-/* VPN card */
-.vpn-card{
-  background:linear-gradient(180deg,var(--surface-soft),var(--surface));
-  border-radius:20px;
-  padding:22px;
-  text-align:center;
-  border:1px solid rgba(255,255,255,.05);
-  box-shadow:0 14px 36px rgba(0,0,0,.4);
-  transition:.35s;
-  position:relative;
-  overflow:hidden;
-}
-.vpn-card::after{
-  content:"";
-  position:absolute;
-  inset:-1px;
-  background:linear-gradient(120deg,transparent,rgba(77,163,255,.25),transparent);
-  opacity:0;
-  transition:.35s;
-}
-.vpn-card:hover{
-  transform:translateY(-4px) scale(1.01);
-}
-.vpn-card:hover::after{opacity:.6}
-
-.vpn-icon{
-  width:56px;
-  height:56px;
-  margin:0 auto 14px;
-  border-radius:16px;
-  background:linear-gradient(135deg,var(--surface-soft),var(--surface));
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
-}
-.vpn-icon img{
-  width:36px;
-  height:36px;
-  object-fit:contain;
-}
-
-.vpn-name{font-weight:600;font-size:16px}
-.badge{
-  display:inline-block;
-  margin:8px 0;
-  font-size:12px;
-  padding:6px 12px;
-  border-radius:999px;
-  background:rgba(77,163,255,.15);
-  color:var(--accent);
-  box-shadow:0 0 0 1px rgba(77,163,255,.25) inset;
-}
-.download-sub{color:var(--muted);font-size:14px}
-
-footer{
-  text-align:center;
-  margin-top:48px;
-  color:var(--muted);
-  font-size:13px;
-}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
-<div class="wrapper">
 
-<div class="topbar reveal">
-  <div></div>
-  <button class="toggle" id="modeBtn" onclick="toggleMode()" title="Toggle light / dark">🌙</button>
-</div>
-
-<div class="brand reveal">
-  <img src="assets/taragon-squad.png" alt="Taragon Squad">
-</div>
-
-<div class="hero reveal">
-  <h1>Welcome to TRS Config Hub</h1>
+<header class="hero">
+  <h1>TRS Config Hub</h1>
   <p>Your Home For Reliable VPN Configurations</p>
-</div>
+</header>
 
-<div class="info reveal">
+<section class="info">
   <h2>What Is TRS Config Hub</h2>
   <p>TRS Config Hub is a centralized platform where users can find VPN configuration files for supported tunneling applications.</p>
-</div>
+</section>
 
-<div class="info reveal">
+<section class="info">
   <h2>Who Manages This Site</h2>
-  <p>This platform is managed by the TRS🇻🇦MANAGEMENT TEAM.</p>
-</div>
+  <p>This platform is managed by the TRS Management Team to ensure stability, reliability and uptime.</p>
+</section>
 
-<div class="info reveal">
+<section class="info">
   <h2>Community & Updates</h2>
-  <p>Join our community for updates and new VPN configurations.</p>
-  <div class="community-buttons">
-    <a class="community-btn" href="https://t.me/taragon_squad_channel">Telegram</a>
-    <a class="community-btn" href="https://chat.whatsapp.com/CtGuXysNPzJ1vFBBGc68sE">WhatsApp</a>
-  </div>
-</div>
+  <p>Follow TRS channels to receive new VPN configs, fixes and announcements.</p>
+</section>
 
-<div class="info reveal">
+<section class="info">
   <h2>Usage Notes</h2>
   <ul>
-    <li>Import into the correct VPN app</li>
-    <li>Network compatibility may vary</li>
-    <li>Always use the latest config</li>
+    <li>Import files into the correct VPN app</li>
+    <li>Compatibility varies by network</li>
+    <li>Use the latest available config</li>
   </ul>
-</div>
+</section>
 
-<div class="vpn-grid reveal">
+<h2 class="title">Select VPN Application</h2>
+<div class="vpn-grid" id="vpnGrid"></div>
 
-<a href="ha-tunnel.html" class="vpn-card">
-  <div class="vpn-icon"><img src="icons/ha.png"></div>
-  <div class="vpn-name">HA Tunnel</div>
-  <div class="badge">CONFIGS AVAILABLE</div>
-  <div class="download-sub">Download VPN file</div>
-</a>
+<h2 class="title">Available Configurations</h2>
+<div class="configs" id="configs"></div>
 
-<a href="http-custom.html" class="vpn-card">
-  <div class="vpn-icon"><img src="icons/http-custom.png"></div>
-  <div class="vpn-name">HTTP Custom</div>
-  <div class="badge">CONFIGS AVAILABLE</div>
-  <div class="download-sub">Download VPN file</div>
-</a>
-
-<a href="http-injector.html" class="vpn-card">
-  <div class="vpn-icon"><img src="icons/http-injector.png"></div>
-  <div class="vpn-name">HTTP Injector</div>
-  <div class="badge">CONFIGS AVAILABLE</div>
-  <div class="download-sub">Download VPN file</div>
-</a>
-
-<a href="nvp.html" class="vpn-card">
-  <div class="vpn-icon"><img src="icons/nvp.png"></div>
-  <div class="vpn-name">NVP</div>
-  <div class="badge">CONFIGS AVAILABLE</div>
-  <div class="download-sub">Download VPN file</div>
-</a>
-
-<a href="zivpn.html" class="vpn-card">
-  <div class="vpn-icon"><img src="icons/zivpn.png"></div>
-  <div class="vpn-name">ZIVPN</div>
-  <div class="badge">CONFIGS AVAILABLE</div>
-  <div class="download-sub">Download VPN file</div>
-</a>
-
-<a href="linklayer.html" class="vpn-card">
-  <div class="vpn-icon"><img src="icons/linklayer.png"></div>
-  <div class="vpn-name">LinkLayer</div>
-  <div class="badge">CONFIGS AVAILABLE</div>
-  <div class="download-sub">Download VPN file</div>
-</a>
-
-<a href="mina.html" class="vpn-card">
-  <div class="vpn-icon"><img src="icons/mina.png"></div>
-  <div class="vpn-name">Mina Pro Net</div>
-  <div class="badge">CONFIGS AVAILABLE</div>
-  <div class="download-sub">Download VPN file</div>
-</a>
-
-<a href="netmod.html" class="vpn-card">
-  <div class="vpn-icon"><img src="icons/netmod.png"></div>
-  <div class="vpn-name">NetMod</div>
-  <div class="badge">CONFIGS AVAILABLE</div>
-  <div class="download-sub">Download VPN file</div>
-</a>
-
-<a href="open-tunnel.html" class="vpn-card">
-  <div class="vpn-icon"><img src="icons/open.png"></div>
-  <div class="vpn-name">Open Tunnel</div>
-  <div class="badge">CONFIGS AVAILABLE</div>
-  <div class="download-sub">Download VPN file</div>
-</a>
-
-<a href="ssh-custom.html" class="vpn-card">
-  <div class="vpn-icon"><img src="icons/scs.png"></div>
-  <div class="vpn-name">SSH Custom</div>
-  <div class="badge">CONFIGS AVAILABLE</div>
-  <div class="download-sub">Download VPN file</div>
-</a>
-
-<a href="kpn.html" class="vpn-card">
-  <div class="vpn-icon"><img src="icons/kpn.png"></div>
-  <div class="vpn-name">KPN Tunnel Rev</div>
-  <div class="badge">CONFIGS AVAILABLE</div>
-  <div class="download-sub">Download VPN file</div>
-</a>
-
-<a href="tls.html" class="vpn-card">
-  <div class="vpn-icon"><img src="icons/tls.png"></div>
-  <div class="vpn-name">TLS Tunnel</div>
-  <div class="badge">CONFIGS AVAILABLE</div>
-  <div class="download-sub">Download VPN file</div>
-</a>
-
-</div>
-
-<footer class="reveal">
-© 2024–2026 TRS🇻🇦MANAGEMENT TEAM. All rights reserved. Unauthorized use, reproduction, or distribution of any website content, branding, or VPN configuration files is strictly prohibited.
-</footer>
-
-</div>
-
-<script>
-function toggleMode(){
-  const b=document.body;
-  const btn=document.getElementById("modeBtn");
-  b.classList.toggle("light");
-  btn.textContent=b.classList.contains("light")?"☀️":"🌙";
-}
-const obs=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add("show")),{threshold:.15});
-document.querySelectorAll(".reveal").forEach(el=>obs.observe(el));
-</script>
-
+<script src="js/app.js"></script>
 </body>
 </html>
